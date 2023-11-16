@@ -66,12 +66,12 @@ public class Result {
         return this;
     }
 
-    public Result data(Map<String, Object> data) {
+    public Result appendData(Map<String, Object> data) {
         this.setData(data);
         return this;
     }
 
-    public Result data(String key, Object value) {
+    public Result appendData(String key, Object value) {
         this.data.put(key, value);
         return this;
     }
