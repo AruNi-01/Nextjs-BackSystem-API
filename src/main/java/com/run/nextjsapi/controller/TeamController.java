@@ -2,7 +2,6 @@ package com.run.nextjsapi.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.run.nextjsapi.common.Result;
-import com.run.nextjsapi.common.ResultCode;
 import com.run.nextjsapi.entity.Team;
 import com.run.nextjsapi.service.TeamService;
 import jakarta.annotation.Resource;
@@ -22,21 +21,21 @@ import java.util.List;
 public class TeamController {
 
     private final Logger logger = LoggerFactory.getLogger(TeamController.class);
-    
+
     @Resource
     private TeamService teamService;
-    
+
     @RequestMapping(path = "/createOrUpdate", method = RequestMethod.POST)
-    public Result createOrUpdate(@RequestBody Team team) {
-        boolean isSave = teamService.saveOrUpdate(team);
-        if (isSave) {
-            return Result.ok();
-        } else {
-            logger.error("createOrUpdate error");
-            return Result.build(ResultCode.DATABASE_ERROR);
+    public boolean createOrUpdate(@RequestBody Team team) {
+        try {
+            teamService.saveOrUpdate(team);
+        } catch (Exception e) {
+            logger.error("createOrUpdate error: {}", e.getMessage());
+            return false;
         }
+        return true;
     }
-    
+
     @RequestMapping(path = "/getTeamList", method = RequestMethod.GET)
     public Result getTeamList(@RequestParam(value = "page", defaultValue = "1") Integer page,
                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
@@ -58,5 +57,5 @@ public class TeamController {
     public Boolean deleteTeamById(@PathVariable Long id) {
         return teamService.removeById(id);
     }
-    
+
 }

@@ -1,9 +1,7 @@
 package com.run.nextjsapi.entity.params;
 
 import lombok.Data;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * @desc:
